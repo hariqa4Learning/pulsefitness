@@ -8,10 +8,10 @@ export default {
     extend: {
       colors: {
         pulse: {
-          black: '#0a0a0a',
-          darkgray: '#121212',
-          gray: '#222222',
-          lightgray: '#aaaaaa',
+          black: '#0B0F1A',
+          darkgray: '#121826',
+          gray: '#1E293B',
+          lightgray: '#94A3B8',
           neon: '#C6FF00',
           neondark: '#A3D900',
         }
