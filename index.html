@@ -6,12 +6,24 @@
 <title>PULSE - Train Hard. Stay Consistent. Become Unstoppable.</title>
   <script type="module" src="/src/main.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-fade-in-up { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-fade-in-right { animation: fadeInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+</style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
 <!-- BEGIN: MainHeader -->
-<header class="fixed w-full top-0 z-50 bg-pulse-black/80 backdrop-blur-md border-b border-pulse-gray">
+<header class="fixed w-full top-0 z-50 bg-pulse-black/60 backdrop-blur-xl border-b border-pulse-gray/30 transition-all duration-300">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between items-center h-20">
+<div class="flex justify-between items-center h-16">
 <!-- Logo -->
 <div class="flex-shrink-0 flex items-center">
 <a class="text-2xl font-bold flex items-center gap-2" href="#">
@@ -22,8 +34,8 @@
 </a>
 </div>
 <!-- Desktop Nav -->
-<nav class="hidden md:flex space-x-8">
-<a class="text-sm font-medium text-white hover:text-pulse-neon transition-colors" href="#">Programs</a>
+<nav class="hidden md:flex space-x-10">
+<a class="text-sm font-medium text-white hover:text-pulse-neon transition-colors" href="#services-section">Programs</a>
 <a class="text-sm font-medium text-gray-300 hover:text-pulse-neon transition-colors" href="#">Coaching</a>
 <a class="text-sm font-medium text-gray-300 hover:text-pulse-neon transition-colors" href="#">Facilities</a>
 <a class="text-sm font-medium text-gray-300 hover:text-pulse-neon transition-colors" href="#">Pricing</a>
@@ -32,74 +44,178 @@
 </nav>
 <!-- CTA -->
 <div class="hidden md:flex items-center">
-<a class="bg-pulse-neon text-black px-6 py-2 rounded font-bold text-sm hover:bg-pulse-neondark transition-colors flex items-center gap-2" href="#">
+<button class="bg-pulse-neon text-black px-6 py-2 rounded font-bold text-sm hover:bg-pulse-neondark transition-all active:scale-95 min-h-[48px] flex items-center gap-2" onclick="openModal()">
             START FREE TRIAL <i class="fa-solid fa-arrow-right"></i>
-</a>
+</button>
 </div>
 <!-- Mobile menu button -->
 <div class="md:hidden flex items-center">
-<button class="text-gray-300 hover:text-white">
+<button class="text-gray-300 hover:text-white transition-colors active:scale-95" onclick="openMobileMenu()">
 <i class="fa-solid fa-bars text-2xl"></i>
 </button>
 </div>
 </div>
 </div>
 </header>
+<!-- BEGIN: Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[100] bg-pulse-black flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+  <!-- Top Bar -->
+  <div class="flex justify-between items-center h-16 px-4 border-b border-pulse-gray/30">
+    <a class="text-2xl font-bold flex items-center gap-2 text-white" href="#" onclick="closeMobileMenu()">
+      PULSE
+      <svg class="w-8 h-8 text-pulse-neon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+      </svg>
+    </a>
+    <button class="text-gray-400 hover:text-white transition-colors active:scale-95" onclick="closeMobileMenu()">
+      <i class="fa-solid fa-xmark text-3xl"></i>
+    </button>
+  </div>
+  
+  <!-- Scrollable Content -->
+  <div class="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-10 hide-scrollbar pb-36">
+    <!-- Main Links -->
+    <nav class="flex flex-col space-y-4">
+      <a href="#services-section" class="text-2xl font-bold text-white py-2 border-b border-pulse-gray/20 active:text-pulse-neon transition-colors" onclick="closeMobileMenu()">Programs</a>
+      <a href="#" class="text-2xl font-bold text-white py-2 border-b border-pulse-gray/20 active:text-pulse-neon transition-colors" onclick="closeMobileMenu()">Coaching</a>
+      <a href="#" class="text-2xl font-bold text-white py-2 border-b border-pulse-gray/20 active:text-pulse-neon transition-colors" onclick="closeMobileMenu()">Facilities</a>
+      <a href="#" class="text-2xl font-bold text-white py-2 border-b border-pulse-gray/20 active:text-pulse-neon transition-colors" onclick="closeMobileMenu()">Pricing</a>
+    </nav>
+
+    <!-- Accordions -->
+    <div class="flex flex-col space-y-6">
+      <!-- Company -->
+      <div class="border-b border-pulse-gray/20 pb-3">
+        <button class="w-full flex justify-between items-center py-2 group" onclick="toggleAccordion('acc-company')">
+          <span class="text-sm font-bold uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors">Company</span>
+          <i id="icon-company" class="fa-solid fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+        </button>
+        <div id="acc-company" class="overflow-hidden transition-all duration-300 max-h-0">
+          <div class="flex flex-col space-y-5 py-4 pl-2">
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">About Us</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Careers</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Blog</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Contact Us</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Support -->
+      <div class="border-b border-pulse-gray/20 pb-3">
+        <button class="w-full flex justify-between items-center py-2 group" onclick="toggleAccordion('acc-support')">
+          <span class="text-sm font-bold uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors">Support</span>
+          <i id="icon-support" class="fa-solid fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+        </button>
+        <div id="acc-support" class="overflow-hidden transition-all duration-300 max-h-0">
+          <div class="flex flex-col space-y-5 py-4 pl-2">
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Help Center</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Membership Terms</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">Refund Policy</a>
+            <a href="#" class="text-lg font-medium text-gray-300 active:text-white transition-colors" onclick="closeMobileMenu()">FAQs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="flex flex-col space-y-5 mt-4 bg-pulse-darkgray rounded-xl p-6 border border-pulse-gray/50">
+      <a href="tel:+919876543210" class="flex items-center gap-4 text-gray-300 active:text-white transition-colors">
+        <div class="w-10 h-10 rounded-full bg-pulse-black flex items-center justify-center border border-pulse-gray/50">
+          <i class="fa-solid fa-phone text-pulse-neon"></i>
+        </div>
+        <span class="text-lg">+91 98765 43210</span>
+      </a>
+      <a href="mailto:info@pulsegym.com" class="flex items-center gap-4 text-gray-300 active:text-white transition-colors">
+        <div class="w-10 h-10 rounded-full bg-pulse-black flex items-center justify-center border border-pulse-gray/50">
+          <i class="fa-solid fa-envelope text-pulse-neon"></i>
+        </div>
+        <span class="text-lg">info@pulsegym.com</span>
+      </a>
+      <div class="flex items-center gap-4 text-gray-300">
+        <div class="w-10 h-10 rounded-full bg-pulse-black flex items-center justify-center border border-pulse-gray/50">
+          <i class="fa-solid fa-location-dot text-pulse-neon"></i>
+        </div>
+        <span class="text-lg leading-tight">15+ Locations<br/><span class="text-sm text-gray-500">Across Kerala</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Mobile CTA -->
+  <div class="absolute bottom-0 left-0 right-0 p-4 pb-8 bg-gradient-to-t from-[#0B0F1A] via-[#0B0F1A]/90 to-transparent pt-12 pointer-events-none">
+    <button class="w-full h-[56px] bg-pulse-neon text-black rounded-xl font-bold active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-lg shadow-[0_0_20px_rgba(198,255,0,0.15)] pointer-events-auto" onclick="closeMobileMenu(); openModal();">
+      Start Free Trial <i class="fa-solid fa-bolt"></i>
+    </button>
+  </div>
+</div>
+<!-- END: Mobile Menu Overlay -->
 <!-- END: MainHeader -->
 <!-- BEGIN: Hero Section -->
-<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-screen flex items-center bg-pulse-black">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-<div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-<!-- Left Content -->
-<div>
-<h1 class="text-5xl lg:text-7xl font-bold uppercase leading-tight mb-6 tracking-tight text-white">
-          Train Hard.<br/>
-          Stay Consistent.<br/>
-<span class="text-pulse-neon">Become Unstoppable.</span>
-</h1>
-<p class="text-lg lg:text-xl text-gray-300 mb-10 max-w-xl">
-          Expert coaching, proven transformation programs, and a community that pushes you forward. Step into the elite.
-        </p>
-<div class="flex flex-col sm:flex-row gap-4 mb-12">
-<a class="bg-pulse-neon text-black px-8 py-4 rounded font-bold text-center hover:bg-pulse-neondark transition-colors flex items-center justify-center gap-2" href="#">
-            START FREE TRIAL <i class="fa-solid fa-arrow-right"></i>
-</a>
-<a class="border border-pulse-gray text-white px-8 py-4 rounded font-bold text-center hover:border-white hover:bg-white hover:text-black transition-all" href="#">
-            EXPLORE PROGRAMS
-          </a>
-</div>
-<!-- Trust Stats -->
-<div class="flex flex-wrap items-center gap-8 border-t border-pulse-gray pt-6 inline-flex">
-<div class="flex items-center gap-3">
-<div class="flex -space-x-3">
-<img alt="Member" class="w-10 h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7nhgAhLxmqNkan7d23YkOQyzA8lBz57dPjHvHFsewy1fzjzYHXzs68OD0W0WSIYUknOxxirHz_D1VFWSQot-wizVe7rQGGru8Lx8D-nRcIWaYm2GgeMVIxvER_-4_kVlgPkUO3Z6xnFbybl8FmBtlVV_Tk9msr_CGZ1eYzOVIqVoeDZA-zC9O3ySoihQJCt_ZZsAycUqGS99BR82KOxn4QVp3abPCl0bMyht2kFk1jPBI0RK40NCFcf1w3qPB6pVHbMYWhZu8Buk"/>
-<img alt="Member" class="w-10 h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ1NG_Cs1NqWF861H-oQDOmlQqaAZD_xEXRtXfhiaSvIMVIiiYhUzwpjGjCSIu_nlfchNnR4pj_XHlRi-CLRVOO2lEC2VekQcGy05p0Ek86JVo3hRCkJ8pVLZiIec3duYUzWmi8LOBjrbL0lPY91zqrGE6XFU9Nw-UPBi6d3nsCxECCRIwP6M-LBuq70XG0_W0FLuZ9n5syXIAh5yQWUioIRHBenVNjNoIXttRxbxZ3XXDGO0SCh-DOqT4XvZ8ZA7TSBtgoPYdUV8"/>
-<img alt="Member" class="w-10 h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSjEp45z76kZGh2stllPs5OUhRmait2BwobekvbxPzheoHR5WqlxZzRoOdHW3rFWk1pVeFxPGeJoJJM8Wo_RtzrkKid5vbkM8aYHoujDM078cyueeoXEouLrCXmPECTChU7HcMq4TtOW8fnsTVBQvFkm7UHQxH92Z4RQ2NF98NsP92nzHs7Ri4lg0PxLV15AAegb6wXFAsEQCZxFT4mQPWY1XXDUN5LtKG38_jIZOQrPGtd4gtqnbG-SBXh5pzZ1qsyFjN9Vr6zCI"/>
-<img alt="Member" class="w-10 h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkIq1zIt_3Mza9G3abkpnAmCAtnGkAnPjD0Ge_GG5vKwtXqj9wTbv0U6Z5EH55DFmhw3bTdwpU90yQkjscKQVFQn6MRpVdtFYKKw3FpgsI-MGb2pdDO4MlvKrmoxLaVFO4KMhLpPelAhIm9oBt41Xf0HsrFNBDkfrfvMoEbH_54z0_CLXtpcqHXQrukmArRIFwBA0Jg9zocpxn8qjQQajDfTY5bjjGGdHRytdacZ_VHWNqnBwl0cMg85m6xXfe37H7NzZibkWJDc4"/>
-</div>
-<div>
-<p class="font-bold text-xl leading-none text-white">5,000+</p>
-<p class="text-sm text-pulse-lightgray">Members</p>
-</div>
-</div>
-<div class="hidden sm:block w-px h-10 bg-pulse-gray"></div>
-<div>
-<div class="flex items-center gap-2">
-<p class="font-bold text-xl leading-none text-white">4.8</p>
-<i class="fa-solid fa-star text-pulse-neon text-sm"></i>
-</div>
-<p class="text-sm text-pulse-lightgray">Average Rating</p>
-</div>
-</div>
-</div>
-<!-- Right Content -->
-<div class="relative w-full h-[400px] lg:h-[600px] rounded-2xl overflow-hidden border border-pulse-gray/50 shadow-[0_0_30px_rgba(198,255,0,0.05)]">
-<img alt="Kerala Athlete Training" class="w-full h-full object-cover object-center" src="/athlete.png"/>
-<div class="absolute inset-0 bg-gradient-to-t from-pulse-black/60 via-transparent to-transparent"></div>
-</div>
-</div>
-</div>
+<section class="relative pt-28 pb-16 lg:pt-40 lg:pb-32 overflow-hidden min-h-[90vh] lg:min-h-screen flex items-center bg-pulse-black">
+  <!-- Immersive Full Right Background Image -->
+  <div class="absolute top-0 right-0 w-full lg:w-[70%] h-full z-0 animate-fade-in-right">
+    <img alt="PULSE Athlete Training" class="absolute right-0 top-0 w-full h-full object-cover object-[65%_center] lg:object-right contrast-110 brightness-110 hover:scale-[1.03] transition-transform duration-[2000ms] origin-right" src="/hero-battleropes-southindian.png"/>
+    <!-- Intense gradient from the left (text area) to blend the image seamlessly -->
+    <div class="absolute inset-0 bg-gradient-to-r from-pulse-black/95 via-pulse-black/70 lg:via-pulse-black/80 to-transparent pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-pulse-black via-pulse-black/40 lg:via-transparent to-transparent pointer-events-none"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+    <!-- Left Content -->
+    <div class="relative z-10 animate-fade-in-up max-w-xl">
+      <h1 class="text-[2.75rem] leading-[1.05] lg:text-7xl font-bold uppercase mb-4 tracking-tight text-white">
+        Train Hard.<br/>
+        Stay Consistent.<br/>
+        <span class="text-pulse-neon">Become<br class="hidden lg:block"/> Unstoppable.</span>
+      </h1>
+      <p class="text-base lg:text-xl text-gray-300 mb-8 max-w-lg">
+        Expert coaching and world-class facilities to push you forward.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-3 mb-10 w-full">
+        <button class="w-full sm:w-auto bg-pulse-neon text-black px-8 py-4 lg:py-5 rounded font-bold text-center hover:bg-pulse-neondark hover:shadow-[0_0_20px_#C6FF00] transition-all active:scale-95 duration-300 flex items-center justify-center gap-2 text-lg" onclick="openModal()">
+          START FREE TRIAL <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <a class="w-full sm:w-auto border border-pulse-gray text-white px-8 py-4 lg:py-5 rounded font-bold text-center hover:border-pulse-neon hover:text-pulse-neon transition-all active:scale-95 duration-300 text-lg flex items-center justify-center" href="#services-section">
+          EXPLORE PROGRAMS
+        </a>
+      </div>
+      
+      <!-- Trust Stats with Avatars -->
+      <div class="flex flex-row items-center gap-6 pt-6 border-t border-pulse-gray/30">
+        <div class="flex items-center gap-3">
+          <!-- Avatars Stack -->
+          <div class="flex -space-x-3">
+            <img alt="Member" class="w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7nhgAhLxmqNkan7d23YkOQyzA8lBz57dPjHvHFsewy1fzjzYHXzs68OD0W0WSIYUknOxxirHz_D1VFWSQot-wizVe7rQGGru8Lx8D-nRcIWaYm2GgeMVIxvER_-4_kVlgPkUO3Z6xnFbybl8FmBtlVV_Tk9msr_CGZ1eYzOVIqVoeDZA-zC9O3ySoihQJCt_ZZsAycUqGS99BR82KOxn4QVp3abPCl0bMyht2kFk1jPBI0RK40NCFcf1w3qPB6pVHbMYWhZu8Buk"/>
+            <img alt="Member" class="w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ1NG_Cs1NqWF861H-oQDOmlQqaAZD_xEXRtXfhiaSvIMVIiiYhUzwpjGjCSIu_nlfchNnR4pj_XHlRi-CLRVOO2lEC2VekQcGy05p0Ek86JVo3hRCkJ8pVLZiIec3duYUzWmi8LOBjrbL0lPY91zqrGE6XFU9Nw-UPBi6d3nsCxECCRIwP6M-LBuq70XG0_W0FLuZ9n5syXIAh5yQWUioIRHBenVNjNoIXttRxbxZ3XXDGO0SCh-DOqT4XvZ8ZA7TSBtgoPYdUV8"/>
+            <img alt="Member" class="w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-pulse-black object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSjEp45z76kZGh2stllPs5OUhRmait2BwobekvbxPzheoHR5WqlxZzRoOdHW3rFWk1pVeFxPGeJoJJM8Wo_RtzrkKid5vbkM8aYHoujDM078cyueeoXEouLrCXmPECTChU7HcMq4TtOW8fnsTVBQvFkm7UHQxH92Z4RQ2NF98NsP92nzHs7Ri4lg0PxLV15AAegb6wXFAsEQCZxFT4mQPWY1XXDUN5LtKG38_jIZOQrPGtd4gtqnbG-SBXh5pzZ1qsyFjN9Vr6zCI"/>
+          </div>
+          <div>
+            <p class="font-bold text-base lg:text-lg leading-none text-white">5,000+</p>
+            <p class="text-[10px] lg:text-xs text-pulse-lightgray mt-1">Members</p>
+          </div>
+        </div>
+        
+        <div class="w-px h-8 lg:h-10 bg-pulse-gray"></div>
+        
+        <div>
+          <div class="flex items-center gap-1">
+            <p class="font-bold text-base lg:text-lg leading-none text-white">4.8</p>
+            <i class="fa-solid fa-star text-pulse-neon text-xs lg:text-sm"></i>
+          </div>
+          <p class="text-[10px] lg:text-xs text-pulse-lightgray mt-1">Rating</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- Mobile Sticky Bottom CTA -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-pulse-black/95 backdrop-blur-md z-50 border-t border-pulse-gray">
+  <button class="w-full bg-pulse-neon text-black py-4 rounded font-bold text-center hover:bg-pulse-neondark transition-all active:scale-95 flex items-center justify-center gap-2 text-lg shadow-[0_0_15px_rgba(198,255,0,0.3)]" onclick="openModal()">
+    START FREE TRIAL <i class="fa-solid fa-bolt"></i>
+  </button>
+</div>
 <!-- END: Hero Section -->
 <!-- BEGIN: Trust Bar -->
 <section class="border-y border-pulse-gray bg-pulse-darkgray py-8 relative z-20">
@@ -130,402 +246,369 @@
 </section>
 <!-- END: Trust Bar -->
 <!-- BEGIN: Services Section -->
-<section class="py-24 bg-pulse-black relative">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="text-center mb-16">
-<p class="text-pulse-neon uppercase tracking-widest text-sm font-bold mb-2">Our Services</p>
-<h2 class="text-4xl font-bold">What You Get At Pulse</h2>
-<div class="mt-4 flex justify-center">
-<svg class="w-16 h-4 text-pulse-neon" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 64 16">
-<path d="M0 8h24l4-6 8 12 4-6h24"></path>
-</svg>
-</div>
-</div>
-<div class="relative">
-<!-- Carousel Nav -->
-<button class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 z-10 w-10 h-10 rounded-full border border-pulse-gray bg-pulse-black flex items-center justify-center hover:border-pulse-neon transition-colors hidden md:flex">
-<i class="fa-solid fa-chevron-left text-pulse-lightgray hover:text-pulse-neon"></i>
-</button>
-<button class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 z-10 w-10 h-10 rounded-full bg-pulse-neon text-black flex items-center justify-center hover:bg-pulse-neondark transition-colors hidden md:flex">
-<i class="fa-solid fa-chevron-right"></i>
-</button>
-<div class="flex overflow-x-auto gap-6 hide-scrollbar pb-8 snap-x">
-<!-- Card 1 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Strength Training" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnNNty78VPq9rJJfnv0bCl2mVfqV7JSHbAKa_x8yoAmtwYKHXvBr_m_WTKDA-nMVmYvlK8ZSo3B8Yknf2rgcPTszM4HMLvnmhEuZ7Ba16EtMXNtKwuPQxy5vnCyCco2gcTPgLlsTiyPpBn-uGPOEu5fyH3S4FgrjvwHBIk9G9Hs_W5BhMHAQPg5aoErC6v0mLXHcnFB8jeh-kqjIoDige-m2OzZIBa1WGWGgAc_VXjTfdpoCAh_eB9sC96qmSBUx5CqBvSClMF5-I"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Strength Training</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Build lean muscle with structured programs.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Fat Loss" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4Cq9v1rGfLTd2lI24KraHBEfKhJFuWcF54efXOS6EBUcKO9sXZaSB1BH_9Ll7g8IDm1lAb9HwQyHTrGmhFaXt2IWdB9YCtlchP5TQuvQ-BhziQnMPVs-1EyeL1whTCCjDVzADaLwvwotIvyUhVgAmIlaRVx2dWT7N-7Q3rv_rzrp2MXbCqcZyeP1k7yiUzEMcUc0-0dzwBZuPSO1BMohrC4w3Fx3ARbRP5oKI7dQIB_cUaI6AdLVRMrjZr0NinIse8tusPRPnhMs"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Fat Loss</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Lose fat without extreme diets.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Personal Coaching" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeivD5nHFumSr3eLysLmBHeXhTBkNvaX00v03fNbYoAfo7THs6ughqG9FBMH2wiJVJNOyD9n7XMSKdnm00MuuvFrQlFWPmiAGeiI5FruYGCaraq7g3LOtbTJJZkyEOZEaC71CILsBqP1jNqP546ixgCJBLwdSA-oo11YmyGKtrBCk2uMxwvev9tvgV0ef29Vm_2OwH9Q8AkdvxleDonTvqG-xdSPS52EpCkYCk-JiVqwb3E05tckZhmYp2_06dy6QVlYwrfbcQxyY"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Personal Coaching</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Get a plan tailored to your body.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-<!-- Card 4 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Group Classes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwNDpFMyl_-aDAEW3Ex8oVfNrO5-T2nJP5tv_dueXDDHMKOeRureBnoqr-J9aPV6HJ12tTqRMFWaYNSPouCslSluJ2T5dJd28BiglB4vOjc2svWIgiyJMS_5K5NG2IJ7HNM2IOxBTqB1HzVxpX2vf_pIC03bp9WsZo7CEMmnQonxZRDvAlyH283_x0Pbbg0tI5qHKciu-0kS54rNgYVOxbdrVbn0Mr_mcWEkKOc1CxVdWjrsnPPPU5woBgapk7Dvbn7ZtuCfJnWyY"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Group Classes</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Train harder with real energy.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-<!-- Card 5 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Cardio Programs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmwt4CKI63sOMmukNWfmP-ytMxX4wec95ObwIYZmd8iSPfHLUHuneeiAC7qN12MeYy335OTPsyeZ6_nJ1GDYRaq4yAVjMajIHopxj3K4QTAYO8dUyfre7L71ATxv7oP_PClM4Y95Op6jOzaJQM3n9ykyKXlcTiTz90Q6-MtbdiqLm2E3tBge-TcdM_RTbyrWR8g7WVTBb6SjIpscN4wPKYcA1u3VU7ntTEiTPuD5IQwRCatfa4A6dd3XhViTOGYQWnpTNnKR3MCaE"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Cardio Programs</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Boost stamina and endurance fast.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-<!-- Card 6 -->
-<div class="min-w-[280px] w-[280px] flex-none snap-start group relative rounded-lg overflow-hidden border border-pulse-gray bg-pulse-darkgray">
-<div class="h-48 overflow-hidden">
-<img alt="Diet Guidance" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArv5Yf23uP0uANwdIaPzmENKeHa6ysM57ar0KVUPUKcv350J8LDX4OLV_RPkjNB7TaYyjHWug62viKMO24Wjjulmd_F78XE6A3vrbRo8JNHcT-YMZvw8BpkHCFyidZap0lmx7PVK28MIzefqgdlCpAEMtmeG4G4UyCyemRxHC-ESK6RwajoSvJCbOwzcqZc3bd6Jxgi4RP-VOHeTRu0-BuWfnz9MDrHFtIVitCnFuDwLCrQ06JZ4FObaTbcROqrtXMgscP_anOpfw"/>
-</div>
-<div class="p-6">
-<h3 class="text-xl font-bold mb-2">Diet Guidance</h3>
-<p class="text-sm text-pulse-lightgray mb-4 h-10">Eat smarter without restrictions.</p>
-<a class="text-pulse-neon font-medium text-sm inline-flex items-center gap-2 group-hover:text-pulse-neondark" href="#">
-                Explore <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-</a>
-</div>
-</div>
-</div>
-<!-- Dots -->
-<div class="flex justify-center gap-2 mt-4">
-<div class="w-8 h-1 bg-pulse-neon rounded"></div>
-<div class="w-4 h-1 bg-pulse-gray rounded"></div>
-<div class="w-4 h-1 bg-pulse-gray rounded"></div>
-</div>
-</div>
-</div>
+<section id="services-section" class="py-16 lg:py-24 bg-pulse-black relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 lg:mb-12 gap-4">
+      <div>
+        <p class="text-pulse-neon uppercase tracking-widest text-xs lg:text-sm font-bold mb-2">Our Services</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-white leading-tight">What You Get At Pulse</h2>
+      </div>
+      <div class="hidden md:flex items-center gap-3">
+        <button id="services-prev" class="w-11 h-11 rounded-full border border-pulse-gray bg-pulse-darkgray flex items-center justify-center hover:border-pulse-neon transition-colors">
+          <i class="fa-solid fa-chevron-left text-pulse-lightgray text-sm"></i>
+        </button>
+        <button id="services-next" class="w-11 h-11 rounded-full bg-pulse-neon text-black flex items-center justify-center hover:bg-pulse-neondark transition-colors">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="relative">
+      <div id="services-track" class="flex overflow-x-auto gap-4 lg:gap-5 hide-scrollbar pb-4 snap-x snap-mandatory pr-4 lg:pr-0">
+        <!-- Card 1: Strength Training -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Strength Training" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/strength-training.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Strength Training</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Build lean muscle with structured programs.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+        <!-- Card 2: Fat Loss -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Fat Loss" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/fat-loss.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Fat Loss</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Lose fat without extreme diets.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+        <!-- Card 3: Personal Coaching -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Personal Coaching" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/personal-coaching.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Personal Coaching</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Get a plan tailored to your body.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+        <!-- Card 4: Group Classes -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Group Classes" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/group-classes.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Group Classes</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Train harder with real energy.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+        <!-- Card 5: Cardio Programs -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Cardio Programs" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/cardio-programs.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Cardio Programs</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Boost stamina and endurance fast.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+        <!-- Card 6: Diet Guidance -->
+        <div class="w-[80vw] min-w-[80vw] sm:w-[280px] sm:min-w-[280px] lg:w-[320px] lg:min-w-[320px] h-[320px] lg:h-[380px] flex-none snap-start service-card relative rounded-xl overflow-hidden border border-pulse-gray/50 cursor-pointer group">
+          <img alt="Diet Guidance" class="service-img absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="/diet-guidance.png"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-1">Diet Guidance</h3>
+            <p class="text-xs lg:text-sm text-gray-300 mb-3 line-clamp-2">Eat smarter without restrictions.</p>
+            <a class="service-cta text-pulse-neon font-medium text-xs lg:text-sm inline-flex items-center gap-2" href="#">Explore <i class="fa-solid fa-arrow-right text-[10px] lg:text-xs"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Swipe Hint / Progress Indicator -->
+      <div class="md:hidden flex flex-col items-center justify-center mt-2">
+        <div class="flex gap-1 mb-2 items-center">
+          <i class="fa-solid fa-arrows-left-right text-pulse-lightgray text-[10px] opacity-70"></i>
+          <span class="text-[10px] text-pulse-lightgray uppercase tracking-widest opacity-70">Swipe to view</span>
+        </div>
+        <div class="w-full max-w-[120px] h-1 bg-pulse-gray rounded-full overflow-hidden">
+          <div id="services-progress" class="h-full bg-pulse-neon rounded-full transition-all duration-300 w-1/3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- END: Services Section -->
 <!-- BEGIN: Facilities Section -->
-<section class="py-24 bg-pulse-darkgray border-t border-pulse-gray relative overflow-hidden">
+<section class="py-16 lg:py-24 bg-pulse-darkgray border-t border-pulse-gray relative overflow-hidden">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="grid lg:grid-cols-2 gap-16 items-center">
-<!-- Image Grid -->
-<div class="relative h-[600px] rounded-lg overflow-hidden">
-<img alt="Gym Facility" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLWzN2fZeVZyMbBQ5zCWhmlf0l9XSmQ98uz5CFcBr7bsRQrHXLLkuWI-mWrtitvulZNecJOa0BZ-2GMVjXd__15b8sMwqQHTpQoT1AX4z7np_Qoc_tAaRr1HPuDR873GH_Kh3XGmKmJlP0jwF4sKmtblxC_GwoC340pv7tBm23TVVwlxd2NuCjOK0-B2x11ALcf77UbZ_V4bXZrdmEvZTTRfbSQB-KMW-qruJDMGju_5aLyN_67_PJeTchVjOsEK1FQYijQCuvKxU"/>
-<div class="absolute inset-0 bg-gradient-to-r from-pulse-black/50 to-transparent"></div>
-<div class="absolute bottom-8 right-8 text-4xl font-bold text-pulse-lightgray/20 text-outline">PULSE</div>
-</div>
-<!-- Content -->
-<div>
-<p class="text-pulse-neon uppercase tracking-widest text-sm font-bold mb-4">Our Facilities</p>
-<h2 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight">Premium Spaces.<br/>Built For Your Best.</h2>
-<p class="text-gray-300 mb-10 text-lg">
-            State-of-the-art equipment and world-class amenities designed to elevate your fitness experience.
-          </p>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-dumbbell text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Top-notch Equipment</h4>
-<p class="text-sm text-pulse-lightgray">Latest &amp; advanced machines</p>
+<div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+<!-- Left: Large Image (7 cols) -->
+<div class="lg:col-span-7 relative">
+<div class="relative h-[300px] sm:h-[400px] lg:h-[620px] rounded-2xl overflow-hidden">
+<img alt="Premium Gym Facility" class="w-full h-full object-cover" src="/gym-facility.png"/>
+<div class="absolute inset-0 bg-gradient-to-r from-pulse-black/40 to-transparent"></div>
+<div class="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 text-3xl lg:text-5xl font-bold text-white/10 uppercase tracking-widest">PULSE</div>
 </div>
 </div>
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-hot-tub-person text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Steam Bath</h4>
-<p class="text-sm text-pulse-lightgray">Relax, recover &amp; rejuvenate</p>
+<!-- Right: Content (5 cols) -->
+<div class="lg:col-span-5">
+<p class="text-pulse-neon uppercase tracking-widest text-xs lg:text-sm font-bold mb-3 lg:mb-4">Our Facilities</p>
+<h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-6 leading-tight text-white">Premium Spaces.<br/>Built For Your Best.</h2>
+<p class="text-sm lg:text-lg text-pulse-lightgray mb-8 lg:mb-10">State-of-the-art equipment and world-class amenities designed to elevate your fitness experience.</p>
+
+<!-- Mobile Optimized 2-Column Grid -->
+<div class="grid grid-cols-2 gap-4 lg:gap-6 mb-8 lg:mb-10">
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start group">
+    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-pulse-gray/50 flex items-center justify-center flex-shrink-0 group-hover:bg-pulse-neon/10 transition-colors">
+      <i class="fa-solid fa-heart-pulse text-pulse-neon text-base lg:text-lg"></i>
+    </div>
+    <div>
+      <h4 class="font-bold text-white text-sm lg:text-base mb-1">Cardio Zone</h4>
+      <p class="text-[11px] lg:text-sm text-pulse-lightgray leading-tight">High-end treadmills & cycling.</p>
+    </div>
+  </div>
+  
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start group">
+    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-pulse-gray/50 flex items-center justify-center flex-shrink-0 group-hover:bg-pulse-neon/10 transition-colors">
+      <i class="fa-solid fa-blender text-pulse-neon text-base lg:text-lg"></i>
+    </div>
+    <div>
+      <h4 class="font-bold text-white text-sm lg:text-base mb-1">Fuel Station</h4>
+      <p class="text-[11px] lg:text-sm text-pulse-lightgray leading-tight">Protein & post-workout fuel.</p>
+    </div>
+  </div>
+  
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start group">
+    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-pulse-gray/50 flex items-center justify-center flex-shrink-0 group-hover:bg-pulse-neon/10 transition-colors">
+      <i class="fa-solid fa-hot-tub-person text-pulse-neon text-base lg:text-lg"></i>
+    </div>
+    <div>
+      <h4 class="font-bold text-white text-sm lg:text-base mb-1">Steam Bath</h4>
+      <p class="text-[11px] lg:text-sm text-pulse-lightgray leading-tight">Recover after intense sessions.</p>
+    </div>
+  </div>
+  
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start group">
+    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg bg-pulse-gray/50 flex items-center justify-center flex-shrink-0 group-hover:bg-pulse-neon/10 transition-colors">
+      <i class="fa-solid fa-hand-fist text-pulse-neon text-base lg:text-lg"></i>
+    </div>
+    <div>
+      <h4 class="font-bold text-white text-sm lg:text-base mb-1">Boxing Zone</h4>
+      <p class="text-[11px] lg:text-sm text-pulse-lightgray leading-tight">Build agility & confidence.</p>
+    </div>
+  </div>
 </div>
-</div>
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-heart-pulse text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Cardio Zone</h4>
-<p class="text-sm text-pulse-lightgray">Improve endurance &amp; burn calories</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-hand-fist text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Boxing Zone</h4>
-<p class="text-sm text-pulse-lightgray">Build strength, agility &amp; confidence</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-blender text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Fuel &amp; Nutrition Bar</h4>
-<p class="text-sm text-pulse-lightgray">Healthy meals, shakes &amp; more</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="text-pulse-neon mt-1"><i class="fa-solid fa-door-closed text-2xl"></i></div>
-<div>
-<h4 class="font-bold mb-1">Spacious Changing Rooms</h4>
-<p class="text-sm text-pulse-lightgray">Clean, comfortable &amp; secure</p>
-</div>
-</div>
-</div>
-<a class="inline-flex border border-pulse-neon text-pulse-neon px-8 py-3 rounded font-bold hover:bg-pulse-neon hover:text-black transition-colors items-center gap-2 uppercase tracking-wide text-sm" href="#">
-            Take A Tour <i class="fa-solid fa-arrow-right"></i>
-</a>
+
+<button class="w-full sm:w-auto inline-flex justify-center border border-pulse-neon text-pulse-neon px-8 py-4 lg:py-3 rounded font-bold hover:bg-pulse-neon hover:text-black transition-colors items-center gap-2 uppercase tracking-wide text-sm" onclick="openModal()">
+  Take A Tour <i class="fa-solid fa-arrow-right"></i>
+</button>
 </div>
 </div>
 </div>
 </section>
 <!-- END: Facilities Section -->
-<!-- BEGIN: Pulse Experience Tiles -->
-<section class="py-24 bg-pulse-black border-t border-pulse-gray">
+<!-- BEGIN: Pulse Experience Section -->
+<section class="py-16 lg:py-24 bg-pulse-black border-t border-pulse-gray">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="mb-12">
-<p class="text-pulse-neon uppercase tracking-widest text-sm font-bold mb-2">THE PULSE EXPERIENCE</p>
-<h2 class="text-4xl font-bold">More Than Just A Workout</h2>
+<div class="mb-8 lg:mb-12">
+<p class="text-pulse-neon uppercase tracking-widest text-xs lg:text-sm font-bold mb-2">THE PULSE EXPERIENCE</p>
+<h2 class="text-3xl lg:text-4xl font-bold text-white">More Than Just A Workout</h2>
 </div>
-<div class="relative">
-<button class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 z-10 w-10 h-10 rounded-full border border-pulse-gray bg-pulse-black flex items-center justify-center hover:border-pulse-neon transition-colors hidden md:flex">
-<i class="fa-solid fa-chevron-left text-pulse-lightgray hover:text-pulse-neon"></i>
-</button>
-<button class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 z-10 w-10 h-10 rounded-full border border-pulse-gray bg-pulse-black flex items-center justify-center hover:border-pulse-neon transition-colors hidden md:flex">
-<i class="fa-solid fa-chevron-right text-pulse-lightgray hover:text-pulse-neon"></i>
-</button>
-<div class="flex overflow-x-auto gap-4 hide-scrollbar pb-8 snap-x">
-<div class="min-w-[240px] w-[240px] h-[320px] flex-none snap-start relative rounded-lg overflow-hidden border border-pulse-gray">
-<img alt="Cardio Zone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkBWnB7aPqGsNgbAN2AYQ1fOab7XdWtMx2e_AyDyYwy3vdD_dXcaB5rmGAK03cb2d0-dF6tWDgWKHIIKG45j1OT_rzNfMVmAYnz_8ZwQMXUcUee-xkXZGy9qrXvE64DBFeCRYta_wsY3UjIkaiHFr7hHepv0QxCaRWbPPDXmYRLdrvgEWOF1iBW7sPsyrA_8eD4CnPhBa2Bi5R7W8jJAbE_Nu6Oujlx17E4Hkg1J3iKp2sMSqdr5UqqhMM0QZCyfSQv6-7GwjgQuE"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-4">
-<div class="text-pulse-neon mb-2"><i class="fa-solid fa-heart-pulse text-2xl"></i></div>
-<h3 class="font-bold text-lg mb-1">Cardio Zone</h3>
-<p class="text-sm text-gray-300">High-end machines for endurance.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+<!-- Card 1: Cardio Area -->
+<div class="group relative h-[140px] lg:h-[360px] rounded-xl overflow-hidden border border-pulse-gray/50">
+<img alt="Cardio Area" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/cardio-zone.png"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-4 lg:p-5 flex flex-col justify-end h-full">
+<div class="text-pulse-neon mb-2 hidden lg:block"><i class="fa-solid fa-heart-pulse text-xl"></i></div>
+<h3 class="font-bold text-base lg:text-lg text-white mb-1">Cardio Area</h3>
+<p class="text-xs lg:text-sm text-gray-300 line-clamp-1 lg:line-clamp-none">High-end machines for endurance.</p>
 </div>
 </div>
-<div class="min-w-[240px] w-[240px] h-[320px] flex-none snap-start relative rounded-lg overflow-hidden border border-pulse-gray">
-<img alt="Fuel &amp; Nutrition Bar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKrpWtuPA6ArSVTytvuAp5yFDuReZOY7s9_hGbCgE-UnI3vlLUN0fVdIMcTr3h_ZfhA876Lkc5WLlRQe8bWLhYOyJhs-UV6lyFzXIwmVlgV-mw2d-kUpAEq2qR5pcdztcia8gqMz2yKhtyTHQFdAPUAgSzX9_4eGIWDP_9lU6sjooIdc6-YX7T9u6LJYQ6vqa3SjwIQQZdYH_63e_Iptvb7vIDyHkjoqFntpbWBnKecT-fP4QvKchzi2yReizPkclSwwVeC-bmXJU"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-4">
-<div class="text-pulse-neon mb-2"><i class="fa-solid fa-blender text-2xl"></i></div>
-<h3 class="font-bold text-lg mb-1">Fuel &amp; Nutrition Bar</h3>
-<p class="text-sm text-gray-300">Protein shakes, healthy meals &amp; refreshments.</p>
+<!-- Card 2: Fuel Up Station -->
+<div class="group relative h-[140px] lg:h-[360px] rounded-xl overflow-hidden border border-pulse-gray/50">
+<img alt="Fuel Up Station" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/fuel-station.png"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-4 lg:p-5 flex flex-col justify-end h-full">
+<div class="text-pulse-neon mb-2 hidden lg:block"><i class="fa-solid fa-blender text-xl"></i></div>
+<h3 class="font-bold text-base lg:text-lg text-white mb-1">Fuel Up Station</h3>
+<p class="text-xs lg:text-sm text-gray-300 line-clamp-1 lg:line-clamp-none">Protein shakes & refreshments.</p>
 </div>
 </div>
-<div class="min-w-[240px] w-[240px] h-[320px] flex-none snap-start relative rounded-lg overflow-hidden border border-pulse-gray">
-<img alt="Steam Bath" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZtkGKbkq2aU8eps8207rTrQnLWI2EWRHw-uXzw8XJauy8L_4UlnDd12ZVPrUy2EfP9IHT-N8U2BKx9aEizU_Q3TJDL20oNLdhfwgpHNGdH0WvdnI9fSvtAvH7nWCWJY3PSLkHHdJ9istNwf3wMsVQsFiiNSsAqNbKvj4AeuvSbqqoZk3dL1F-lWRbuMSzERquZDQ4Eq1YnTTp0BpoNvY-OhhBdjxSnQFsLxkN9SlaftdkyffyXhZx5d3N5s7wj1XMB1w6nwbyesI"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-4">
-<div class="text-pulse-neon mb-2"><i class="fa-solid fa-hot-tub-person text-2xl"></i></div>
-<h3 class="font-bold text-lg mb-1">Steam Bath</h3>
-<p class="text-sm text-gray-300">Relax and detox after intense workouts.</p>
+<!-- Card 3: Steam Bath -->
+<div class="group relative h-[140px] lg:h-[360px] rounded-xl overflow-hidden border border-pulse-gray/50">
+<img alt="Steam Bath" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/steam-bath.png"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-4 lg:p-5 flex flex-col justify-end h-full">
+<div class="text-pulse-neon mb-2 hidden lg:block"><i class="fa-solid fa-hot-tub-person text-xl"></i></div>
+<h3 class="font-bold text-base lg:text-lg text-white mb-1">Steam Bath</h3>
+<p class="text-xs lg:text-sm text-gray-300 line-clamp-1 lg:line-clamp-none">Relax and detox after workouts.</p>
 </div>
 </div>
-<div class="min-w-[240px] w-[240px] h-[320px] flex-none snap-start relative rounded-lg overflow-hidden border border-pulse-gray">
-<img alt="Boxing Zone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaNNLy6ut5ZDLBDbTuMrxPAOrK2WpzriRsHUr67R6GzsJVxkXY9L3K5dYg7-tPFpLAvBZy6lQBUd4ulwuqWUxGppdFpp6_D96RhJS7tKOtoMU6CKZpUoQ74-TKdXtMh2to_OmUBPgqa8xeGeqZfcaW58-iMKCEaqmGFDfyJuf5WQpTvTLL31RPbuawb-1QDpjhHY-LP5B5nLJXc8GLPCxGZzwJkkkH2CpjLWSrH1qnEw_n1OetS-kEP-bgF6qbhPzCyOH8kf1udeo"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-4">
-<div class="text-pulse-neon mb-2"><i class="fa-solid fa-hand-fist text-2xl"></i></div>
-<h3 class="font-bold text-lg mb-1">Boxing Zone</h3>
-<p class="text-sm text-gray-300">Strength, speed &amp; self-defense training.</p>
+<!-- Card 4: Boxing Zone -->
+<div class="group relative h-[140px] lg:h-[360px] rounded-xl overflow-hidden border border-pulse-gray/50">
+<img alt="Boxing Zone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/boxing-zone.png"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 p-4 lg:p-5 flex flex-col justify-end h-full">
+<div class="text-pulse-neon mb-2 hidden lg:block"><i class="fa-solid fa-hand-fist text-xl"></i></div>
+<h3 class="font-bold text-base lg:text-lg text-white mb-1">Boxing Zone</h3>
+<p class="text-xs lg:text-sm text-gray-300 line-clamp-1 lg:line-clamp-none">Strength & self-defense training.</p>
 </div>
-</div>
-<div class="min-w-[240px] w-[240px] h-[320px] flex-none snap-start relative rounded-lg overflow-hidden border border-pulse-gray">
-<img alt="Functional Training" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKT9zdTe2jXMUID8-LrSQuoY2P9r2v0mgGEHPoKVILTV1Ytqwcq6CrHStQLg5JQ8wZqO3EisYafhjQzwY7e_mjGChlOhEpfHPTOl7zYX_Hcgn3Iv0eLWzWi3bqp-6ANMpH4FXoulVx0mDFR29jtc9V72vlMucHUk2ePW_-gNyDlHsiA9etVyRaE3Dor20fgd8iYwp_5zh2YlzlVgulAB4vxT4nR4Pgm6vBGUFbKiJGr3LsAcfGB5A66EW5U3CukfznwIQOQsSVZKo"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-4">
-<div class="text-pulse-neon mb-2"><i class="fa-solid fa-dumbbell text-2xl"></i></div>
-<h3 class="font-bold text-lg mb-1">Functional Training</h3>
-<p class="text-sm text-gray-300">Move better. Perform stronger.</p>
-</div>
-</div>
-</div>
-<div class="flex justify-center gap-2 mt-4">
-<div class="w-8 h-1 bg-pulse-neon rounded"></div>
-<div class="w-4 h-1 bg-pulse-gray rounded"></div>
-<div class="w-4 h-1 bg-pulse-gray rounded"></div>
-<div class="w-4 h-1 bg-pulse-gray rounded"></div>
 </div>
 </div>
 </div>
 </section>
-<!-- END: Pulse Experience Tiles -->
+<!-- END: Pulse Experience Section -->
 <!-- BEGIN: Trainers Section -->
-<section class="py-24 bg-pulse-black border-t border-pulse-gray">
+<section class="py-16 lg:py-24 bg-pulse-black border-t border-pulse-gray">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between items-end mb-12">
+<div class="flex flex-col sm:flex-row justify-between sm:items-end mb-8 lg:mb-16 gap-4">
 <div>
-<p class="text-pulse-neon uppercase tracking-widest text-sm font-bold mb-2">OUR TRAINERS</p>
-<h2 class="text-4xl font-bold">Learn From The Best</h2>
+<p class="text-pulse-neon uppercase tracking-widest text-xs lg:text-sm font-bold mb-2">OUR TRAINERS</p>
+<h2 class="text-3xl lg:text-4xl font-bold text-white">Learn From The Best</h2>
 </div>
-<a class="text-pulse-neon font-bold text-sm hidden md:flex items-center gap-2 hover:text-pulse-neondark" href="#">
-          VIEW ALL TRAINERS <i class="fa-solid fa-arrow-right"></i>
+<a class="text-pulse-neon font-bold text-sm flex items-center gap-2 hover:text-pulse-neondark self-start sm:self-auto" href="#">
+  VIEW ALL <i class="fa-solid fa-arrow-right"></i>
 </a>
 </div>
-<div class="grid md:grid-cols-3 gap-8">
-<div class="bg-pulse-darkgray rounded-lg border border-pulse-gray flex overflow-hidden">
-<img alt="Arun Raj" class="w-1/2 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB8FFldh_GCh08V-RaaFh9RL2RB-xWf-lMkJ50GkiChN_ncxSU3ZHj8zcVl3rRnjKdAuh4Yf6que_cCnQ6toaOetC1sldmFb_4DlaFUpjEiGF0PAatdd2u2zf_5UGnVL_T0nrL4ZJic0AWlxKNKEqMjhi_i4-caEn-E3Ouf7iIFAcTjwbUaC1vYhs7o9Hi7fOCc9ZSfpZ-xAXBKaCD8FjYrR2lHwufrteJjX2J_t7y7Gv5GwEafyHs6BrVeBN5_yX4loj1L4g4MF4"/>
-<div class="p-6 w-1/2 flex flex-col justify-center">
-<h3 class="text-xl font-bold mb-1">Arun Raj</h3>
-<p class="text-pulse-neon text-sm font-bold mb-2">Strength Coach</p>
-<p class="text-xs text-gray-400 mb-2">7+ Years Experience</p>
-<p class="text-sm text-gray-300 mb-4">Specialist in Strength &amp; Muscle Building</p>
-<div class="flex gap-3">
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-instagram"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+
+<!-- Mobile Horizontal Scroll Container -->
+<div class="flex overflow-x-auto md:flex-row gap-6 lg:gap-12 md:justify-between hide-scrollbar snap-x snap-mandatory pb-6 md:pb-0 pr-4 md:pr-0">
+<!-- Trainer 1 -->
+<div class="flex-none w-[75vw] sm:w-[300px] md:w-auto md:flex-1 flex flex-col items-center text-center group snap-start">
+<div class="w-full aspect-square mb-4 lg:mb-6 overflow-hidden rounded-xl border border-pulse-gray/30">
+<img alt="Arun Raj" class="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" src="/trainer_1.png"/>
 </div>
+<h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Arun Raj</h3>
+<p class="text-pulse-neon text-xs lg:text-sm font-bold mb-2 tracking-wide uppercase">Strength Coach</p>
+<p class="text-xs lg:text-sm text-gray-400">8+ Years Experience</p>
 </div>
+<!-- Trainer 2 -->
+<div class="flex-none w-[75vw] sm:w-[300px] md:w-auto md:flex-1 flex flex-col items-center text-center group snap-start">
+<div class="w-full aspect-square mb-4 lg:mb-6 overflow-hidden rounded-xl border border-pulse-gray/30">
+<img alt="Lakshmi Menon" class="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" src="/trainer_2.png"/>
 </div>
-<div class="bg-pulse-darkgray rounded-lg border border-pulse-gray flex overflow-hidden">
-<img alt="Vishnu Nair" class="w-1/2 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYjiyNl6c2lx4gsUgE2HverP3Na-tMpuo3AA_ZmWN9Ns3xYV3G7FppnNGEqxVdnj8tO3ngFpDWPaxGQ-hhWDD4Hg7nzbGKL53NfT2wEkOhEnlwo6k7kV9ZNc82yXFH9oq4wDEOsxGK_3NkzHS3JhmPvy4Ls6IKNs4ErJW6Mmx0HP1xnQNcJl0N3V9TCaM_-FruSt7bi0vP_2ZEF5H6Tv0FdlXEs5yhq0fNCz6koLQgAa_IwMQTQuq6W9Sarc3XXMKrVBdBzJQI_y4"/>
-<div class="p-6 w-1/2 flex flex-col justify-center">
-<h3 class="text-xl font-bold mb-1">Vishnu Nair</h3>
-<p class="text-pulse-neon text-sm font-bold mb-2">Performance Coach</p>
-<p class="text-xs text-gray-400 mb-2">6+ Years Experience</p>
-<p class="text-sm text-gray-300 mb-4">Expert in Functional Training &amp; Conditioning</p>
-<div class="flex gap-3">
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-instagram"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+<h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Lakshmi Menon</h3>
+<p class="text-pulse-neon text-xs lg:text-sm font-bold mb-2 tracking-wide uppercase">Performance Coach</p>
+<p class="text-xs lg:text-sm text-gray-400">6+ Years Experience</p>
 </div>
+<!-- Trainer 3 -->
+<div class="flex-none w-[75vw] sm:w-[300px] md:w-auto md:flex-1 flex flex-col items-center text-center group snap-start">
+<div class="w-full aspect-square mb-4 lg:mb-6 overflow-hidden rounded-xl border border-pulse-gray/30">
+<img alt="Rahul Pradeep" class="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500" src="/trainer_3.png"/>
 </div>
-</div>
-<div class="bg-pulse-darkgray rounded-lg border border-pulse-gray flex overflow-hidden">
-<img alt="Rahul Pradeep" class="w-1/2 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATJWO0c4ltVKYeKqcXThRPehmYovIrw_49wckIFoSZ9UvNJnXjApyBTK-nTvHH5hVOKVZnSkuzFiD-8Xy-cWt1movasyXScfLzq8lioTOM7sMH_-kNdfJO31ygl87cCvm3qnaoPoe_UKhSEMRwxBY-6r9OpiIonzRuxbGZ3Aq5HJGy069c8YyGerh026fO_-RHmFA7iv3d4sRuJmWRmeWlbKZ5SKZZBxp51wYVGHjWgt7DnLrieEopQq8oxMC04YPdeoQaHB8MZcU"/>
-<div class="p-6 w-1/2 flex flex-col justify-center">
-<h3 class="text-xl font-bold mb-1">Rahul Pradeep</h3>
-<p class="text-pulse-neon text-sm font-bold mb-2">Nutrition Coach</p>
-<p class="text-xs text-gray-400 mb-2">5+ Years Experience</p>
-<p class="text-sm text-gray-300 mb-4">Specialist in Sports Nutrition &amp; Recovery</p>
-<div class="flex gap-3">
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-instagram"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-<a class="text-gray-400 hover:text-pulse-neon" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-</div>
-</div>
+<h3 class="text-xl lg:text-2xl font-bold text-white mb-1">Rahul Pradeep</h3>
+<p class="text-pulse-neon text-xs lg:text-sm font-bold mb-2 tracking-wide uppercase">Nutrition &amp; Recovery</p>
+<p class="text-xs lg:text-sm text-gray-400">10+ Years Experience</p>
 </div>
 </div>
 </div>
 </section>
 <!-- END: Trainers Section -->
 <!-- BEGIN: Pricing Section -->
-<section class="py-24 bg-pulse-black border-t border-pulse-gray">
+<section class="py-16 lg:py-24 bg-pulse-black border-t border-pulse-gray">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-<div>
-<p class="text-pulse-neon uppercase tracking-widest text-sm font-bold mb-2">PRICING PLANS</p>
-<h2 class="text-4xl font-bold">Choose The Plan That Fits You</h2>
+<div class="flex flex-col sm:flex-row justify-between sm:items-end mb-10 lg:mb-12 gap-6">
+<div class="text-center sm:text-left">
+<p class="text-pulse-neon uppercase tracking-widest text-xs lg:text-sm font-bold mb-2">PRICING PLANS</p>
+<h2 class="text-3xl lg:text-4xl font-bold text-white">Choose Your Plan</h2>
 </div>
-<div class="flex bg-pulse-darkgray rounded border border-pulse-gray p-1">
-<button class="px-6 py-2 rounded text-sm font-bold bg-pulse-gray text-white">Monthly</button>
-<button class="px-6 py-2 rounded text-sm font-bold text-pulse-lightgray hover:text-white">Yearly (Save 20%)</button>
+<div class="flex w-full sm:w-auto bg-pulse-darkgray rounded-lg border border-pulse-gray p-1">
+<button id="toggle-monthly" class="flex-1 sm:flex-none px-4 lg:px-6 py-3 lg:py-2 rounded-md text-xs lg:text-sm font-bold bg-pulse-gray text-white transition-colors" onclick="setPricing('monthly')">Monthly</button>
+<button id="toggle-yearly" class="flex-1 sm:flex-none px-4 lg:px-6 py-3 lg:py-2 rounded-md text-xs lg:text-sm font-bold text-pulse-lightgray hover:text-white transition-colors" onclick="setPricing('yearly')">Yearly (-20%)</button>
 </div>
 </div>
-<div class="grid lg:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-8">
 <!-- Plan 1 -->
-<div class="bg-pulse-darkgray rounded-lg border border-pulse-gray p-8 flex flex-col">
-<h3 class="text-xl font-bold mb-2">Basic Access</h3>
+<div class="bg-pulse-darkgray rounded-xl border border-pulse-gray p-6 lg:p-8 flex flex-col">
+<h3 class="text-lg lg:text-xl font-bold mb-1 lg:mb-2 text-white">Basic Access</h3>
 <div class="flex items-end gap-1 mb-2">
-<span class="text-4xl font-bold">₹999</span>
-<span class="text-pulse-neon text-sm mb-1">/month</span>
+<span class="text-3xl lg:text-4xl font-bold text-white price-amount" data-monthly="₹999" data-yearly="₹9,590">₹999</span>
+<span class="text-pulse-neon text-xs lg:text-sm mb-1 price-period" data-monthly="/mo" data-yearly="/yr">/mo</span>
 </div>
-<p class="text-gray-400 text-sm mb-8">Perfect for beginners getting started.</p>
-<ul class="space-y-4 mb-8 flex-grow">
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Gym Access</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Locker Access</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Basic Equipment Use</li>
+<p class="text-gray-400 text-xs lg:text-sm mb-6 lg:mb-8">Perfect for beginners getting started.</p>
+<ul class="space-y-3 lg:space-y-4 mb-6 lg:mb-8 flex-grow">
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Gym Access</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Locker Access</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Basic Equipment Use</li>
 </ul>
-<a class="w-full block text-center py-3 border border-pulse-gray rounded font-bold text-sm hover:bg-pulse-gray transition-colors" href="#">CHOOSE PLAN</a>
+<button class="w-full block text-center py-4 lg:py-3 border border-pulse-neon text-pulse-neon rounded font-bold text-sm hover:bg-pulse-neon hover:text-black transition-colors uppercase tracking-wider" onclick="openModal('Basic Access')">Choose Plan</button>
 </div>
 <!-- Plan 2 -->
-<div class="bg-pulse-darkgray rounded-lg border-2 border-pulse-neon p-8 flex flex-col relative">
-<div class="absolute -top-3 left-8 bg-pulse-neon text-black text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">MOST POPULAR</div>
-<h3 class="text-xl font-bold mb-2">Pro Performance</h3>
+<div class="bg-pulse-darkgray rounded-xl border-2 border-pulse-neon p-6 lg:p-8 flex flex-col relative transform lg:-translate-y-4 shadow-[0_0_30px_rgba(198,255,0,0.05)] lg:shadow-[0_0_30px_rgba(198,255,0,0.1)]">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-pulse-neon text-black text-[10px] lg:text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider whitespace-nowrap">MOST POPULAR</div>
+<h3 class="text-lg lg:text-xl font-bold mb-1 lg:mb-2 text-white">Pro Performance</h3>
 <div class="flex items-end gap-1 mb-2">
-<span class="text-4xl font-bold">₹1,999</span>
-<span class="text-pulse-neon text-sm mb-1">/month</span>
+<span class="text-3xl lg:text-4xl font-bold text-white price-amount" data-monthly="₹1,999" data-yearly="₹19,190">₹1,999</span>
+<span class="text-pulse-neon text-xs lg:text-sm mb-1 price-period" data-monthly="/mo" data-yearly="/yr">/mo</span>
 </div>
-<p class="text-gray-400 text-sm mb-8">Everything you need to maximize results.</p>
-<ul class="space-y-4 mb-8 flex-grow">
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Everything in Basic</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Personal Training (2 Sessions/Month)</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Group Classes</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Nutrition Guidance</li>
+<p class="text-gray-400 text-xs lg:text-sm mb-6 lg:mb-8">Everything you need to maximize results.</p>
+<ul class="space-y-3 lg:space-y-4 mb-6 lg:mb-8 flex-grow">
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Everything in Basic</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Personal Training (2 Sessions)</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Group Classes</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Nutrition Guidance</li>
 </ul>
-<a class="w-full block text-center py-3 bg-pulse-neon text-black rounded font-bold text-sm hover:bg-pulse-neondark transition-colors" href="#">CHOOSE PLAN</a>
+<button class="w-full block text-center py-4 lg:py-3 bg-pulse-neon text-black rounded font-bold text-sm hover:bg-pulse-neondark transition-colors uppercase tracking-wider shadow-[0_0_15px_rgba(198,255,0,0.3)] lg:shadow-none" onclick="openModal('Pro Performance')">Choose Plan</button>
 </div>
 <!-- Plan 3 -->
-<div class="bg-pulse-darkgray rounded-lg border border-pulse-gray p-8 flex flex-col">
-<h3 class="text-xl font-bold mb-2">Elite Coaching</h3>
+<div class="bg-pulse-darkgray rounded-xl border border-pulse-gray p-6 lg:p-8 flex flex-col">
+<h3 class="text-lg lg:text-xl font-bold mb-1 lg:mb-2 text-white">Elite Coaching</h3>
 <div class="flex items-end gap-1 mb-2">
-<span class="text-4xl font-bold">₹3,499</span>
-<span class="text-pulse-neon text-sm mb-1">/month</span>
+<span class="text-3xl lg:text-4xl font-bold text-white price-amount" data-monthly="₹3,499" data-yearly="₹33,590">₹3,499</span>
+<span class="text-pulse-neon text-xs lg:text-sm mb-1 price-period" data-monthly="/mo" data-yearly="/yr">/mo</span>
 </div>
-<p class="text-gray-400 text-sm mb-8">For those who want complete transformation.</p>
-<ul class="space-y-4 mb-8 flex-grow">
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Everything in Pro</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Personal Training (8 Sessions/Month)</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Customized Nutrition Plan</li>
-<li class="flex items-center gap-3 text-sm"><i class="fa-solid fa-check text-pulse-neon"></i> Priority Support</li>
+<p class="text-gray-400 text-xs lg:text-sm mb-6 lg:mb-8">For those who want complete transformation.</p>
+<ul class="space-y-3 lg:space-y-4 mb-6 lg:mb-8 flex-grow">
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Everything in Pro</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Personal Training (8 Sessions)</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Custom Nutrition Plan</li>
+<li class="flex items-center gap-3 text-xs lg:text-sm text-gray-300"><i class="fa-solid fa-check text-pulse-neon"></i> Priority Support</li>
 </ul>
-<a class="w-full block text-center py-3 border border-pulse-gray rounded font-bold text-sm hover:bg-pulse-gray transition-colors" href="#">CHOOSE PLAN</a>
+<button class="w-full block text-center py-4 lg:py-3 border border-pulse-neon text-pulse-neon rounded font-bold text-sm hover:bg-pulse-neon hover:text-black transition-colors uppercase tracking-wider" onclick="openModal('Elite Coaching')">Choose Plan</button>
 </div>
 </div>
 </div>
 </section>
 <!-- END: Pricing Section -->
 <!-- BEGIN: Final CTA -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-<div class="bg-pulse-neon text-black rounded-xl overflow-hidden flex flex-col md:flex-row items-center">
-<img alt="High Five" class="w-full md:w-1/3 h-64 md:h-auto object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2LZgSVM1uX9ZomkLi2zD3J3TBmmtOTTliAhBIJxWlj5WY7Q1-IV8Q-cn2svVggP2PIhiNtgUEwkZwnywXad1D8E4t7EMHgxwh2d-WYx7Iz9B0O24I7uHbCivRC1c_CMMVoiI3X_abUbD6WLPqdg-IM5dIMdOG4PtQduV1YB2TlcxErSRVDmy3W5IhNv1XrDHJ13v-YVFmHKm5ldqxv4v5dx493M4khOAhWjKiQZuHzKjn6ta_pT4pL5NrO4C2FB49ESjgwM6OkFw"/>
-<div class="p-8 md:p-12 flex-grow">
-<p class="uppercase font-bold tracking-widest text-sm mb-2">READY TO START YOUR TRANSFORMATION?</p>
-<h2 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight">Let's Build Your<br/>Best Version</h2>
-<div class="flex flex-col sm:flex-row gap-4 mb-6">
-<input class="bg-white/20 border-black/20 text-black placeholder-black/60 rounded px-4 py-3 flex-grow focus:ring-black focus:border-black" placeholder="Enter your email" type="email"/>
-<button class="bg-black text-pulse-neon font-bold px-8 py-3 rounded hover:bg-gray-900 transition-colors">JOIN NOW</button>
-</div>
-<div class="flex flex-wrap gap-4 sm:gap-6 text-sm font-bold">
-<div class="flex items-center gap-2"><i class="fa-solid fa-check"></i> No Commitment</div>
-<div class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Cancel Anytime</div>
-<div class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Trusted by 5,000+ Members</div>
-</div>
-</div>
-</div>
+<section class="relative py-16 lg:py-24 overflow-hidden border-t border-pulse-gray bg-pulse-black">
+  <!-- Immersive Background -->
+  <div class="absolute inset-0 z-0">
+    <img alt="PULSE Gym Vibe" class="w-full h-full object-cover object-center" src="/cta-background.png"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-[rgba(11,15,26,0.95)] via-[rgba(11,15,26,0.85)] to-[rgba(11,15,26,0.7)] backdrop-blur-[2px]"></div>
+  </div>
+  
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+    <p class="uppercase font-bold tracking-widest text-xs lg:text-sm mb-3 lg:mb-4 text-pulse-neon animate-fade-in-up">READY TO COMMIT?</p>
+    <h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-6 leading-tight text-white animate-fade-in-up" style="animation-delay: 100ms;">Start Your Transformation Today</h2>
+    <p class="text-sm lg:text-lg text-gray-300 mb-8 lg:mb-12 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 200ms;">
+      Get access to world-class coaching, premium facilities, and a community built for results.
+    </p>
+    
+    <form class="flex flex-col md:flex-row gap-3 lg:gap-4 mb-6 lg:mb-8 animate-fade-in-up" style="animation-delay: 300ms;" onsubmit="event.preventDefault(); openModal();">
+      <input class="w-full min-h-[48px] bg-black/50 border border-pulse-gray/50 text-white placeholder-gray-400 rounded-md px-5 py-3 lg:py-4 focus:ring-pulse-neon focus:border-pulse-neon transition-colors outline-none backdrop-blur-sm flex-1 text-sm lg:text-base" placeholder="Your Name" type="text" required id="cta-name"/>
+      <input class="w-full min-h-[48px] bg-black/50 border border-pulse-gray/50 text-white placeholder-gray-400 rounded-md px-5 py-3 lg:py-4 focus:ring-pulse-neon focus:border-pulse-neon transition-colors outline-none backdrop-blur-sm flex-1 text-sm lg:text-base" placeholder="Phone Number" type="tel" required id="cta-phone"/>
+      <button class="w-full md:w-auto bg-pulse-neon text-black font-bold px-8 py-3 lg:py-4 rounded-md hover:bg-pulse-neondark hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-[0_0_15px_rgba(198,255,0,0.15)] hover:shadow-[0_0_25px_rgba(198,255,0,0.3)] whitespace-nowrap text-sm lg:text-base min-h-[48px]" type="submit">
+        Start Free Trial
+      </button>
+    </form>
+    
+    <div class="flex flex-wrap justify-center items-center gap-2 lg:gap-3 text-[11px] lg:text-xs font-medium text-gray-400 animate-fade-in-up" style="animation-delay: 400ms;">
+      <span>No commitment</span>
+      <span class="text-pulse-neon hidden sm:inline">•</span>
+      <span>Cancel anytime</span>
+      <span class="text-pulse-neon hidden sm:inline">•</span>
+      <span>Trusted by 5,000+ members</span>
+    </div>
+  </div>
 </section>
 <!-- END: Final CTA -->
 <!-- BEGIN: Footer -->
-<footer class="bg-pulse-darkgray border-t border-pulse-gray pt-16 pb-8">
+<footer class="bg-pulse-darkgray border-t border-pulse-gray pt-16 pb-28 lg:pb-8">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
 <!-- Brand -->
@@ -558,7 +641,7 @@
 <div>
 <h4 class="font-bold mb-4 uppercase tracking-wider text-sm">Quick Links</h4>
 <ul class="space-y-3">
-<li><a class="text-gray-400 hover:text-pulse-neon transition-colors text-sm" href="#">Programs</a></li>
+<li><a class="text-gray-400 hover:text-pulse-neon transition-colors text-sm" href="#services-section">Programs</a></li>
 <li><a class="text-gray-400 hover:text-pulse-neon transition-colors text-sm" href="#">Coaching</a></li>
 <li><a class="text-gray-400 hover:text-pulse-neon transition-colors text-sm" href="#">Facilities</a></li>
 <li><a class="text-gray-400 hover:text-pulse-neon transition-colors text-sm" href="#">Pricing</a></li>
@@ -588,9 +671,9 @@
 </div>
 </div>
 <!-- Contact Bottom -->
-<div class="border-t border-pulse-gray pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-<p>© 2024 Pulse Fitness. All rights reserved.</p>
-<div class="flex gap-8">
+<div class="border-t border-pulse-gray pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-4 text-sm text-gray-500">
+<p class="order-2 md:order-1 mt-2 md:mt-0 text-left">© 2024 Pulse Fitness. All rights reserved.</p>
+<div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 order-1 md:order-2">
 <div class="flex items-center gap-2">
 <i class="fa-solid fa-phone text-pulse-neon"></i>
 <span>+91 98765 43210</span>
@@ -608,4 +691,163 @@
 </div>
 </footer>
 <!-- END: Footer -->
+<!-- BEGIN: Modal -->
+<div id="join-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+  <div class="bg-pulse-darkgray border border-pulse-gray rounded-xl max-w-md w-full p-6 relative transform scale-95 transition-transform duration-300" id="join-modal-content">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+    
+    <div class="text-center mb-6">
+      <h3 class="text-2xl font-bold text-white mb-2">Join Pulse Fitness</h3>
+      <p class="text-gray-400 text-sm">Fill out the details below and we'll get you started on your transformation.</p>
+    </div>
+    
+    <form class="space-y-4" onsubmit="event.preventDefault(); alert('Form submitted successfully!'); closeModal();">
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+        <input type="text" id="modal-name" required class="w-full min-h-[48px] bg-pulse-black border border-pulse-gray rounded px-4 py-2.5 text-white focus:border-pulse-neon focus:ring-1 focus:ring-pulse-neon transition-colors outline-none" placeholder="John Doe">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
+        <input type="tel" id="modal-phone" required class="w-full min-h-[48px] bg-pulse-black border border-pulse-gray rounded px-4 py-2.5 text-white focus:border-pulse-neon focus:ring-1 focus:ring-pulse-neon transition-colors outline-none" placeholder="+91 98765 43210">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Preferred Location</label>
+        <input type="text" id="modal-location" required class="w-full min-h-[48px] bg-pulse-black border border-pulse-gray rounded px-4 py-2.5 text-white focus:border-pulse-neon focus:ring-1 focus:ring-pulse-neon transition-colors outline-none" placeholder="City or area">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Select Plan</label>
+        <select id="modal-plan" required class="w-full min-h-[48px] bg-pulse-black border border-pulse-gray rounded px-4 py-2.5 text-white focus:border-pulse-neon focus:ring-1 focus:ring-pulse-neon transition-colors outline-none appearance-none">
+          <option value="" disabled selected>Choose a plan...</option>
+          <option value="Basic Access">Basic Access (₹999/mo)</option>
+          <option value="Pro Performance">Pro Performance (₹1,999/mo)</option>
+          <option value="Elite Coaching">Elite Coaching (₹3,499/mo)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Primary Goal</label>
+        <select id="modal-goal" required class="w-full min-h-[48px] bg-pulse-black border border-pulse-gray rounded px-4 py-2.5 text-white focus:border-pulse-neon focus:ring-1 focus:ring-pulse-neon transition-colors outline-none appearance-none">
+          <option value="" disabled selected>What do you want to achieve?</option>
+          <option value="Weight Loss">Weight Loss</option>
+          <option value="Muscle Gain">Muscle Gain</option>
+          <option value="Boxing">Boxing / Martial Arts</option>
+          <option value="Fitness">General Fitness</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full min-h-[48px] bg-pulse-neon text-black font-bold rounded py-3 hover:bg-pulse-neondark transition-all active:scale-95 mt-2">SUBMIT DETAILS</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('translate-x-full');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.add('translate-x-full');
+    document.body.style.overflow = '';
+  }
+  
+  function toggleAccordion(id) {
+    const acc = document.getElementById(id);
+    const icon = document.getElementById(id.replace('acc-', 'icon-'));
+    
+    // Close other accordions
+    const allAccs = ['acc-company', 'acc-support'];
+    allAccs.forEach(accId => {
+      if (accId !== id) {
+        document.getElementById(accId).style.maxHeight = null;
+        document.getElementById(accId.replace('acc-', 'icon-')).classList.remove('rotate-180');
+      }
+    });
+    
+    if (acc.style.maxHeight) {
+      acc.style.maxHeight = null;
+      icon.classList.remove('rotate-180');
+    } else {
+      acc.style.maxHeight = acc.scrollHeight + "px";
+      icon.classList.add('rotate-180');
+    }
+  }
+
+  function openModal(plan = '') {
+    const modal = document.getElementById('join-modal');
+    const content = document.getElementById('join-modal-content');
+    const ctaName = document.getElementById('cta-name');
+    const ctaPhone = document.getElementById('cta-phone');
+    const modalName = document.getElementById('modal-name');
+    const modalPhone = document.getElementById('modal-phone');
+    const modalPlan = document.getElementById('modal-plan');
+    
+    if (ctaName && ctaName.value) modalName.value = ctaName.value;
+    if (ctaPhone && ctaPhone.value) modalPhone.value = ctaPhone.value;
+    
+    if (plan) {
+      for (let i = 0; i < modalPlan.options.length; i++) {
+        if (modalPlan.options[i].value === plan) {
+          modalPlan.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+    }, 10);
+  }
+  
+  function closeModal() {
+    const modal = document.getElementById('join-modal');
+    const content = document.getElementById('join-modal-content');
+    
+    modal.classList.add('opacity-0');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  }
+  
+  document.getElementById('join-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+
+  function setPricing(period) {
+    const monthlyBtn = document.getElementById('toggle-monthly');
+    const yearlyBtn = document.getElementById('toggle-yearly');
+    const amounts = document.querySelectorAll('.price-amount');
+    const periods = document.querySelectorAll('.price-period');
+
+    if (period === 'monthly') {
+      monthlyBtn.classList.add('bg-pulse-gray', 'text-white');
+      monthlyBtn.classList.remove('text-pulse-lightgray');
+      yearlyBtn.classList.remove('bg-pulse-gray', 'text-white');
+      yearlyBtn.classList.add('text-pulse-lightgray');
+      
+      amounts.forEach(el => el.textContent = el.getAttribute('data-monthly'));
+      periods.forEach(el => el.textContent = el.getAttribute('data-monthly'));
+    } else {
+      yearlyBtn.classList.add('bg-pulse-gray', 'text-white');
+      yearlyBtn.classList.remove('text-pulse-lightgray');
+      monthlyBtn.classList.remove('bg-pulse-gray', 'text-white');
+      monthlyBtn.classList.add('text-pulse-lightgray');
+      
+      amounts.forEach(el => el.textContent = el.getAttribute('data-yearly'));
+      periods.forEach(el => el.textContent = el.getAttribute('data-yearly'));
+    }
+  }
+</script>
+<!-- END: Modal -->
 </body></html>
